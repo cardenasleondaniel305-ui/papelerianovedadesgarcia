@@ -1,0 +1,775 @@
+<!--<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plumas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="menu-navegacion">
+    <a href="../../index.html">Inicio</a>
+    <a href="javascript:history.back()">Volver</a>
+</nav>
+    <div class="logo">
+        <img src="../../images/papeleria_novedades_garcia_logo_transparente.png" alt="Logo">
+    </div>
+    <div class="carrusel-productos">
+        <button class="flecha izquierda">&#8592;</button>
+        <div class="productos">
+            <div class="producto activo">
+                <img src="../plumas/images/pluma azul.webp" alt="Pluma 1">
+                <p>Pluma Azul</p>
+                <p>$10.00</p>
+            </div>
+            <div class="producto">
+                <img src="../plumas/images/pluma negra.png" alt="Pluma 2">
+                <p>Pluma Negra</p>
+                <p>$10.00</p>
+            </div>
+            <div class="producto">
+                <img src="../plumas/images/pluma roja.jpeg" alt="Pluma 3">
+                <p>Pluma Roja</p>
+                <p>$10.00</p>
+            </div>
+        </div>
+        <button class="flecha derecha">&#8594;</button>
+    </div>
+    <button onclick="agregarCarrito('Pluma azul',10)">Agregar al carrito</button>
+    <span id="contador">0</span>
+    <div id="listaCarrito"></div>
+    <button onclick="vaciarCarrito()">Vaciar carrito</button>
+    <script>
+        function vaciarCarrito(){
+localStorage.removeItem("carrito");
+document.getElementById("listaCarrito").innerHTML = "";
+actualizarContador();
+alert("El carrito ha sido vaciado");
+}
+        let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+let contenedor = document.getElementById("listaCarrito");
+carrito.forEach(producto => {
+contenedor.innerHTML += `<p>${producto.nombre} - $${producto.precio}</p>`;
+});
+        function actualizarContador(){
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+document.getElementById("contador").innerText = carrito.length;
+}
+actualizarContador();
+        function agregarCarrito(nombre,precio){
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+carrito.push({nombre:nombre,precio:precio});
+localStorage.setItem("carrito",JSON.stringify(carrito));
+actualizarContador();
+}
+    document.addEventListener('DOMContentLoaded', function() {
+        const productos = document.querySelectorAll('.producto');
+        const btnIzq = document.querySelector('.flecha.izquierda');
+        const btnDer = document.querySelector('.flecha.derecha');
+        let indice = 0;
+
+        function mostrarProducto(i) {
+            productos.forEach((prod, idx) => {
+                prod.classList.toggle('activo', idx === i);
+            });
+        }
+
+        btnIzq.addEventListener('click', function() {
+            indice = (indice - 1 + productos.length) % productos.length;
+            mostrarProducto(indice);
+        });
+
+        btnDer.addEventListener('click', function() {
+            indice = (indice + 1) % productos.length;
+            mostrarProducto(indice);
+        });
+
+        mostrarProducto(indice);
+    });
+    </script>
+</body>
+<footer>
+    <p>&copy; 2026 Papelería y novedades García. Todos los derechos reservados.</p>
+    <p>
+        Encuentranos en Jardines de las Naciones 122, Los Héroes Tecámac, 55764 Ciudad de México, México. o visítanos en Google Maps para conocer nuestra ubicación exacta.
+        </p>
+        <p> Correo electrónico: garcianovedades1@gmail.com</p>
+        <!-- Redes sociales 
+    <div class="redes-sociales">
+        <a href="https://wa.me/5215512345678" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" 
+width="60" alt="WhatsApp">
+</a>
+
+        <a href="https://www.facebook.com/profile.php?id=61586238901068" target="_blank"><img src="../../images/Facebook_Logo_(2019).png.webp" alt="Facebook"></a>
+        <a href="https://www.instagram.com/pape2_026?utm_source=qr&igsh=MTZ3ZW1sYWhiN2FocQ==" target="_blank"><img src="../../images/Instagram_icon.png" alt="Instagram"></a>
+        <a href="https://www.google.com/maps/place/Novedades+Garcia/@19.6340948,-99.0305121,3a,75y,31.74h,91.17t/data=!3m7!1e1!3m5!1saFiQ-F3NDr3ONLRi6N0Fhg!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D-1.168040298569835%26panoid%3DaFiQ-F3NDr3ONLRi6N0Fhg%26yaw%3D31.74212734783976!7i16384!8i8192!4m14!1m7!3m6!1s0x85d1f21915243d69:0xb350633b5b7d233c!2sC.+Jardines+de+las+Naciones+122,+Los+Heroes+Tecamac,+55764+Ciudad+de+M%C3%A9xico,+M%C3%A9x.!3b1!8m2!3d19.6340719!4d-99.0304878!3m5!1s0x85d1f2194418532d:0x316376b62301c9f7!8m2!3d19.6340887!4d-99.0304328!16s%2Fg%2F11rmzyrp4h?entry=ttu&g_ep=EgoyMDI2MDIyNS4wIKXMDSoASAFQAw%3D%3D" ><img src="../../images/google maps.jpg" alt="Google maps"></a>
+    </div>
+</footer>
+</html>-->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Productos</title>
+
+<link rel="stylesheet" href="styles.css">
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:20px;
+}
+
+/* ===================== */
+/* MENÚ */
+/* ===================== */
+
+.menu-navegacion{
+    display:flex;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.menu-navegacion a{
+    text-decoration:none;
+    background:#9a24e2;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+}
+
+/* ===================== */
+/* LOGO */
+/* ===================== */
+
+.logo{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.logo img{
+    width:220px;
+}
+
+/* ===================== */
+/* PRODUCTOS */
+/* ===================== */
+
+#contenedorProductos{
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(320px,1fr));
+
+    gap:20px;
+}
+
+/* ===================== */
+/* TARJETA */
+/* ===================== */
+
+.card{
+
+    background:white;
+    border-radius:15px;
+    padding:20px;
+
+    box-shadow:
+    0 4px 10px rgba(0,0,0,0.1);
+
+}
+
+.card img{
+
+    width:100%;
+    height:220px;
+    object-fit:contain;
+    margin-bottom:15px;
+
+}
+
+.card h2{
+    color:#333;
+}
+
+select,
+button{
+
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    font-size:15px;
+
+}
+
+button{
+
+    background:#007bff;
+    color:white;
+    border:none;
+    cursor:pointer;
+    font-weight:bold;
+
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+/* ===================== */
+/* CARRITO */
+/* ===================== */
+
+.carrito{
+
+    margin-top:40px;
+    background:white;
+    padding:20px;
+    border-radius:15px;
+
+    box-shadow:
+    0 4px 10px rgba(0,0,0,0.1);
+
+}
+
+.item{
+    border-bottom:1px solid #ddd;
+    padding:10px 0;
+}
+
+.total{
+    font-size:22px;
+    font-weight:bold;
+    margin-top:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- ===================== -->
+<!-- NAVEGACIÓN -->
+<!-- ===================== -->
+
+<nav class="menu-navegacion">
+
+<a href="../../index.html">
+
+Inicio
+
+</a>
+
+<a href="javascript:history.back()">
+
+Volver
+
+</a>
+
+</nav>
+
+<!-- ===================== -->
+<!-- LOGO -->
+<!-- ===================== -->
+
+<div class="logo">
+
+<img
+src="../../images/papeleria_novedades_garcia_logo_transparente.png"
+alt="Logo">
+
+</div>
+
+<!-- ===================== -->
+<!-- PRODUCTOS -->
+<!-- ===================== -->
+
+<div id="contenedorProductos">
+
+</div>
+
+<!-- ===================== -->
+<!-- CARRITO -->
+<!-- ===================== -->
+
+<div class="carrito">
+
+<h2>
+
+Carrito de Compras
+
+</h2>
+
+<div id="listaCarrito">
+
+</div>
+
+<div class="total">
+
+Total:
+$<span id="total">0</span>
+
+MXN
+
+</div>
+
+<button onclick="vaciarCarrito()">
+
+Vaciar carrito
+
+</button>
+
+</div>
+
+<!-- ===================== -->
+<!-- SCRIPT -->
+<!-- ===================== -->
+
+<script>
+
+// ======================================
+// OBTENER CATEGORÍA AUTOMÁTICA
+// ======================================
+
+// Obtiene el nombre del archivo actual
+// Ejemplo:
+// plumas.html => plumas
+
+let paginaActual =
+
+window.location.pathname
+.split("/")
+.pop()
+.replace(".html","")
+.toLowerCase();
+
+// ======================================
+// OBTENER PRODUCTOS
+// ======================================
+
+function obtenerProductos(){
+
+    return JSON.parse(
+        localStorage.getItem("productos")
+    ) || [];
+
+}
+
+// ======================================
+// FILTRAR PRODUCTOS
+// ======================================
+
+function obtenerProductosCategoria(){
+
+    let productos = obtenerProductos();
+
+    return productos.filter(producto => {
+
+        if(!producto.categoria) return false;
+
+        return producto.categoria
+        .toLowerCase()
+        === paginaActual;
+
+    });
+
+}
+
+// ======================================
+// MOSTRAR PRODUCTOS
+// ======================================
+
+function mostrarProductos(){
+
+    let contenedor =
+
+    document.getElementById(
+    "contenedorProductos"
+    );
+
+    contenedor.innerHTML = "";
+
+    let productosCategoria =
+    obtenerProductosCategoria();
+
+    // SI NO HAY PRODUCTOS
+
+    if(productosCategoria.length === 0){
+
+        contenedor.innerHTML = `
+
+        <h2>
+
+        No hay productos registrados
+
+        </h2>
+
+        `;
+
+        return;
+
+    }
+
+    // ======================================
+    // AGRUPAR POR NOMBRE
+    // ======================================
+
+    let agrupados = {};
+
+    productosCategoria.forEach(producto => {
+
+        let nombre = producto.nombre;
+
+        if(!agrupados[nombre]){
+
+            agrupados[nombre] = [];
+
+        }
+
+        agrupados[nombre].push(producto);
+
+    });
+
+    // ======================================
+    // CREAR TARJETAS
+    // ======================================
+
+    Object.keys(agrupados).forEach(nombre => {
+
+        let variantes =
+        agrupados[nombre];
+
+        let base =
+        variantes[0];
+
+        // ======================================
+        // COLORES
+        // ======================================
+
+        let colores = [];
+
+        variantes.forEach(v => {
+
+            let colorLimpio =
+            v.color.trim();
+
+            if(
+                !colores.includes(colorLimpio)
+            ){
+
+                colores.push(colorLimpio);
+
+            }
+
+        });
+
+        // ======================================
+        // CREAR CARD
+        // ======================================
+
+        let card =
+        document.createElement("div");
+
+        card.classList.add("card");
+
+        card.innerHTML = `
+
+        <img
+        id="img-${nombre}"
+        src="${base.imagen}">
+
+        <h2>
+
+        ${nombre}
+
+        </h2>
+
+        <!-- COLORES -->
+
+        <select
+        id="color-${nombre}">
+
+        ${colores.map(color => `
+
+        <option value="${color}">
+        ${color}
+        </option>
+
+        `).join("")}
+
+        </select>
+
+        <!-- PRESENTACIÓN -->
+
+        <select
+        id="presentacion-${nombre}">
+
+            <option value="unidad">
+            Unidad
+            </option>
+
+            <option value="paquete">
+            Paquete
+            </option>
+
+        </select>
+
+        <!-- PRECIO -->
+
+        <p>
+
+        Precio:
+        $
+
+        <span id="precio-${nombre}">
+
+        ${base.precioUnidad}
+
+        </span>
+
+        MXN
+
+        </p>
+
+        <button
+        onclick="agregarCarrito('${nombre}')">
+
+        Agregar al carrito
+
+        </button>
+
+        `;
+
+        contenedor.appendChild(card);
+
+        // ======================================
+        // CAMBIAR PRECIO
+        // ======================================
+
+        let presentacion =
+
+        document.getElementById(
+        `presentacion-${nombre}`
+        );
+
+        let precioTexto =
+
+        document.getElementById(
+        `precio-${nombre}`
+        );
+
+        presentacion.addEventListener(
+        "change",
+        function(){
+
+            let tipo =
+            this.value;
+
+            if(tipo === "unidad"){
+
+                precioTexto.textContent =
+                base.precioUnidad;
+
+            }else{
+
+                precioTexto.textContent =
+                base.precioPaquete;
+
+            }
+
+        });
+
+    });
+
+}
+
+// ======================================
+// AGREGAR AL CARRITO
+// ======================================
+
+function agregarCarrito(nombre){
+
+    let productosCategoria =
+    obtenerProductosCategoria();
+
+    let producto =
+
+    productosCategoria.find(p =>
+    p.nombre === nombre);
+
+    if(!producto){
+
+        alert("Producto no encontrado");
+        return;
+
+    }
+
+    let color =
+
+    document.getElementById(
+    `color-${nombre}`
+    ).value;
+
+    let presentacion =
+
+    document.getElementById(
+    `presentacion-${nombre}`
+    ).value;
+
+    let precio =
+
+    presentacion === "unidad"
+    ?
+
+    Number(producto.precioUnidad)
+
+    :
+
+    Number(producto.precioPaquete);
+
+    let carrito =
+
+    JSON.parse(
+    localStorage.getItem("carrito")
+    )
+
+    || [];
+
+    carrito.push({
+
+        nombre,
+        color,
+        presentacion,
+        precio
+
+    });
+
+    localStorage.setItem(
+
+        "carrito",
+
+        JSON.stringify(carrito)
+
+    );
+
+    mostrarCarrito();
+
+    alert("Producto agregado");
+
+}
+
+// ======================================
+// MOSTRAR CARRITO
+// ======================================
+
+function mostrarCarrito(){
+
+    let carrito =
+
+    JSON.parse(
+    localStorage.getItem("carrito")
+    )
+
+    || [];
+
+    let lista =
+
+    document.getElementById(
+    "listaCarrito"
+    );
+
+    lista.innerHTML = "";
+
+    let total = 0;
+
+    carrito.forEach(item => {
+
+        total += Number(item.precio);
+
+        lista.innerHTML += `
+
+        <div class="item">
+
+        <strong>
+
+        ${item.nombre}
+
+        </strong>
+
+        <br>
+
+        Color:
+        ${item.color}
+
+        <br>
+
+        Presentación:
+        ${item.presentacion}
+
+        <br>
+
+        Precio:
+        $${item.precio}
+
+        </div>
+
+        `;
+
+    });
+
+    document.getElementById(
+    "total"
+    ).textContent = total;
+
+}
+
+// ======================================
+// VACIAR CARRITO
+// ======================================
+
+function vaciarCarrito(){
+
+    localStorage.removeItem(
+    "carrito"
+    );
+
+    mostrarCarrito();
+
+    alert("Carrito vaciado");
+
+}
+
+// ======================================
+// ACTUALIZAR AUTOMÁTICAMENTE
+// ======================================
+
+window.addEventListener(
+"storage",
+mostrarProductos
+);
+
+// ======================================
+// INICIAR
+// ======================================
+
+mostrarProductos();
+
+mostrarCarrito();
+
+</script>
+</body>
+
+</html>

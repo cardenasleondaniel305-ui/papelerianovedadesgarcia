@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Tienda Dinámica</title>
+
+<style>
+
+/* ===================== */
+/* GENERALES */
+/* ===================== */
+
+body{
+
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:20px;
+
+}
+
+h1,h2{
+    color:#333;
+}
+
+/* ===================== */
+/* MENÚ */
+/* ===================== */
+
+.menu{
+
+    background:#9a24e2;
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:20px;
+
+}
+
+.menu ul{
+
+    display:flex;
+    gap:20px;
+    list-style:none;
+    margin:0;
+    padding:0;
+    flex-wrap:wrap;
+
+}
+
+.menu a{
+
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+
+}
+
+/* ===================== */
+/* PANEL ADMIN */
+/* ===================== */
+
+.panel{
+
+    background:white;
+    padding:20px;
+    border-radius:15px;
+
+    box-shadow:
+    0 4px 10px rgba(0,0,0,0.1);
+
+    margin-bottom:30px;
+
+}
+
+input,
+select,
+button{
+
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+
+    border-radius:8px;
+    border:1px solid #ccc;
+
+    font-size:15px;
+
+}
+
+button{
+
+    background:#007bff;
+    color:white;
+    border:none;
+    cursor:pointer;
+    font-weight:bold;
+
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+/* ===================== */
+/* CATEGORÍAS */
+/* ===================== */
+
+.categorias{
+
+    display:flex;
+    flex-direction:column;
+    gap:40px;
+
+}
+
+/* ===================== */
+/* PRODUCTOS */
+/* ===================== */
+
+.productos{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(300px,1fr));
+
+    gap:20px;
+
+}
+
+.card{
+
+    background:white;
+    border-radius:15px;
+    padding:20px;
+
+    box-shadow:
+    0 4px 10px rgba(0,0,0,0.1);
+
+}
+
+.card img{
+
+    width:100%;
+    height:220px;
+    object-fit:contain;
+
+}
+
+/* ===================== */
+/* CARRITO */
+/* ===================== */
+
+.carrito{
+
+    background:white;
+    margin-top:40px;
+    padding:20px;
+    border-radius:15px;
+
+    box-shadow:
+    0 4px 10px rgba(0,0,0,0.1);
+
+}
+
+.item{
+
+    border-bottom:1px solid #ddd;
+    padding:10px 0;
+
+}
+
+.total{
+
+    margin-top:20px;
+    font-size:22px;
+    font-weight:bold;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- ===================== -->
+<!-- MENÚ DINÁMICO -->
+<!-- ===================== -->
+
+<div class="menu">
+
+<ul id="menuCategorias">
+
+</ul>
+
+</div>
+
+<!-- ===================== -->
+<!-- PANEL ADMIN -->
+<!-- ===================== -->
+
+<div class="panel">
+
+<h1>
+
+Administrador
+
+</h1>
+
+<!-- CREAR CATEGORÍA -->
+
+<h2>
+
+Crear Categoría
+
+</h2>
+
+<input
+type="text"
+id="nuevaCategoria"
+placeholder="Ejemplo: Plumas">
+
+<button onclick="crearCategoria()">
+
+Crear Categoría
+
+</button>
+
+<hr>
+
+<!-- AGREGAR PRODUCTO -->
+
+<h2>
+
+Agregar Producto
+
+</h2>
+
+<input
+type="text"
+id="nombre"
+placeholder="Nombre del producto">
+
+<input
+type="text"
+id="tipo"
+placeholder="Tipo Ej: Gel, Cristal">
+
+<input
+type="text"
+id="color"
+placeholder="Color">
+
+<input
+type="number"
+id="precioUnidad"
+placeholder="Precio por unidad">
+
+<input
+type="number"
+id="precioPaquete"
+placeholder="Precio por paquete">
+
+<input
+type="text"
+id="imagen"
+placeholder="URL imagen">
+
+<select id="categoria">
+
+</select>
+
+<button onclick="guardarProducto()">
+
+Agregar Producto
+
+</button>
+
+</div>
+
+<!-- ===================== -->
+<!-- CATEGORÍAS Y PRODUCTOS -->
+<!-- ===================== -->
+
+<div
+class="categorias"
+id="contenedorCategorias">
+
+</div>
+
+<!-- ===================== -->
+<!-- CARRITO -->
+<!-- ===================== -->
+
+<div class="carrito">
+
+<h2>
+
+Carrito de Compras
+
+</h2>
+
+<div id="listaCarrito">
+
+</div>
+
+<div class="total">
+
+Total:
+$<span id="total">0</span>
+
+MXN
+
+</div>
+
+<button onclick="vaciarCarrito()">
+
+Vaciar carrito
+
+</button>
+
+</div>
+
+<!-- ===================== -->
+<!-- SCRIPT -->
+<!-- ===================== -->
+
+<script>
+
+// ======================================
+// CREAR CATEGORÍA
+// ======================================
+
+function crearCategoria(){
+
+    let nombre =
+
+    document.getElementById(
+    "nuevaCategoria"
+    ).value.trim();
+
+    if(nombre === ""){
+
+        alert("Escribe una categoría");
+        return;
+
+    }
+
+    let categorias =
+
+    JSON.parse(
+    localStorage.getItem("categorias")
+    )
+
+    || [];
+
+    // EVITAR REPETIDAS
+
+    if(categorias.includes(nombre)){
+
+        alert("La categoría ya existe");
+        return;
+
+    }
+
+    categorias.push(nombre);
+
+    localStorage.setItem(
+
+        "categorias",
+
+        JSON.stringify(categorias)
+
+    );
+
+    document.getElementById(
+    "nuevaCategoria"
+    ).value = "";
+
+    cargarCategorias();
+
+    mostrarCategorias();
+
+}
+
+// ======================================
+// CARGAR SELECT
+// ======================================
+
+function cargarCategorias(){
+
+    let categorias =
+
+    JSON.parse(
+    localStorage.getItem("categorias")
+    )
+
+    || [];
+
+    let select =
+
+    document.getElementById(
+    "categoria"
+    );
+
+    select.innerHTML = "";
+
+    categorias.forEach(categoria => {
+
+        select.innerHTML += `
+
+        <option value="${categoria}">
+        ${categoria}
+        </option>
+
+        `;
+
+    });
+
+}
+
+// ======================================
+// GUARDAR PRODUCTO
+// ======================================
+
+function guardarProducto(){
+
+    let nombre =
+    document.getElementById("nombre").value;
+
+    let tipo =
+    document.getElementById("tipo").value;
+
+    let color =
+    document.getElementById("color").value;
+
+    let precioUnidad =
+    document.getElementById("precioUnidad").value;
+
+    let precioPaquete =
+    document.getElementById("precioPaquete").value;
+
+    let imagen =
+    document.getElementById("imagen").value;
+
+    let categoria =
+    document.getElementById("categoria").value;
+
+    // VALIDAR
+
+    if(
+
+        nombre === "" ||
+        tipo === "" ||
+        color === "" ||
+        precioUnidad === "" ||
+        precioPaquete === "" ||
+        imagen === ""
+
+    ){
+
+        alert("Completa todos los campos");
+        return;
+
+    }
+
+    let productos =
+
+    JSON.parse(
+    localStorage.getItem("productos")
+    )
+
+    || [];
+
+    productos.push({
+
+        nombre,
+        tipo,
+        color,
+        precioUnidad,
+        precioPaquete,
+        imagen,
+        categoria
+
+    });
+
+    localStorage.setItem(
+
+        "productos",
+
+        JSON.stringify(productos)
+
+    );
+
+    alert("Producto agregado");
+
+    // LIMPIAR
+
+    document.getElementById("nombre").value = "";
+    document.getElementById("tipo").value = "";
+    document.getElementById("color").value = "";
+    document.getElementById("precioUnidad").value = "";
+    document.getElementById("precioPaquete").value = "";
+    document.getElementById("imagen").value = "";
+
+    mostrarCategorias();
+
+}
+
+// ======================================
+// MOSTRAR CATEGORÍAS
+// ======================================
+
+function mostrarCategorias(){
+
+    let categorias =
+
+    JSON.parse(
+    localStorage.getItem("categorias")
+    )
+
+    || [];
+
+    let productos =
+
+    JSON.parse(
+    localStorage.getItem("productos")
+    )
+
+    || [];
+
+    let menu =
+
+    document.getElementById(
+    "menuCategorias"
+    );
+
+    let contenedor =
+
+    document.getElementById(
+    "contenedorCategorias"
+    );
+
+    menu.innerHTML = "";
+    contenedor.innerHTML = "";
+
+    categorias.forEach(categoria => {
+
+        // MENÚ
+
+        menu.innerHTML += `
+
+        <li>
+
+        <a href="#${categoria}">
+        ${categoria}
+        </a>
+
+        </li>
+
+        `;
+
+        // PRODUCTOS
+
+        let productosCategoria =
+
+        productos.filter(p =>
+
+        p.categoria === categoria
+
+        );
+
+        let html = `
+
+        <div id="${categoria}">
+
+        <h2>
+
+        ${categoria}
+
+        </h2>
+
+        <div class="productos">
+
+        `;
+
+        productosCategoria.forEach((producto,index)=>{
+
+            html += `
+
+            <div class="card">
+
+                <img
+                src="${producto.imagen}">
+
+                <h3>
+
+                ${producto.nombre}
+
+                </h3>
+
+                <!-- TIPO -->
+
+                <p>
+
+                Tipo:
+                ${producto.tipo}
+
+                </p>
+
+                <!-- COLOR -->
+
+                <p>
+
+                Color:
+                ${producto.color}
+
+                </p>
+
+                <!-- PRESENTACIÓN -->
+
+                <select
+                id="presentacion-${categoria}-${index}"
+
+                onchange="
+                actualizarPrecio(
+                '${categoria}',
+                ${index},
+                '${producto.precioUnidad}',
+                '${producto.precioPaquete}'
+                )
+                ">
+
+                    <option value="unidad">
+
+                    Unidad
+
+                    </option>
+
+                    <option value="paquete">
+
+                    Paquete
+
+                    </option>
+
+                </select>
+
+                <!-- PRECIO -->
+
+                <p>
+
+                Precio:
+                $
+
+                <span
+                id="precio-${categoria}-${index}">
+
+                ${producto.precioUnidad}
+
+                </span>
+
+                MXN
+
+                </p>
+
+                <!-- BOTÓN -->
+
+                <button
+                onclick="
+                agregarCarrito(
+                '${producto.nombre}',
+                '${producto.color}',
+                '${producto.tipo}',
+                '${producto.precioUnidad}',
+                '${producto.precioPaquete}',
+                '${categoria}',
+                ${index}
+                )
+                ">
+
+                Agregar al carrito
+
+                </button>
+
+                <!-- ELIMINAR -->
+
+                <button
+                style="background:red;"
+                onclick="
+                eliminarProducto(${index},
+                '${categoria}')
+                ">
+
+                Eliminar
+
+                </button>
+
+            </div>
+
+            `;
+
+        });
+
+        html += `
+
+        </div>
+        </div>
+
+        `;
+
+        contenedor.innerHTML += html;
+
+    });
+
+}
+
+// ======================================
+// ACTUALIZAR PRECIO
+// ======================================
+
+function actualizarPrecio(
+categoria,
+index,
+precioUnidad,
+precioPaquete
+){
+
+    let presentacion =
+
+    document.getElementById(
+    `presentacion-${categoria}-${index}`
+    ).value;
+
+    let precio =
+
+    presentacion === "unidad"
+    ?
+
+    precioUnidad
+
+    :
+
+    precioPaquete;
+
+    document.getElementById(
+    `precio-${categoria}-${index}`
+    ).textContent = precio;
+
+}
+
+// ======================================
+// AGREGAR CARRITO
+// ======================================
+
+function agregarCarrito(
+nombre,
+color,
+tipo,
+precioUnidad,
+precioPaquete,
+categoria,
+index
+){
+
+    let presentacion =
+
+    document.getElementById(
+    `presentacion-${categoria}-${index}`
+    ).value;
+
+    let precio =
+
+    presentacion === "unidad"
+    ?
+
+    Number(precioUnidad)
+
+    :
+
+    Number(precioPaquete);
+
+    let carrito =
+
+    JSON.parse(
+    localStorage.getItem("carrito")
+    )
+
+    || [];
+
+    carrito.push({
+
+        nombre,
+        color,
+        tipo,
+        presentacion,
+        precio
+
+    });
+
+    localStorage.setItem(
+
+        "carrito",
+
+        JSON.stringify(carrito)
+
+    );
+
+    mostrarCarrito();
+
+}
+
+// ======================================
+// MOSTRAR CARRITO
+// ======================================
+
+function mostrarCarrito(){
+
+    let carrito =
+
+    JSON.parse(
+    localStorage.getItem("carrito")
+    )
+
+    || [];
+
+    let lista =
+
+    document.getElementById(
+    "listaCarrito"
+    );
+
+    lista.innerHTML = "";
+
+    let total = 0;
+
+    carrito.forEach(item => {
+
+        total += Number(item.precio);
+
+        lista.innerHTML += `
+
+        <div class="item">
+
+        <strong>
+
+        ${item.nombre}
+
+        </strong>
+
+        <br>
+
+        Tipo:
+        ${item.tipo}
+
+        <br>
+
+        Color:
+        ${item.color}
+
+        <br>
+
+        Presentación:
+        ${item.presentacion}
+
+        <br>
+
+        Precio:
+        $${item.precio}
+
+        </div>
+
+        `;
+
+    });
+
+    document.getElementById(
+    "total"
+    ).textContent = total;
+
+}
+
+// ======================================
+// ELIMINAR PRODUCTO
+// ======================================
+
+function eliminarProducto(
+index,
+categoria
+){
+
+    let productos =
+
+    JSON.parse(
+    localStorage.getItem("productos")
+    )
+
+    || [];
+
+    let productosFiltrados = [];
+    let contador = -1;
+
+    productos.forEach(producto => {
+
+        if(producto.categoria === categoria){
+
+            contador++;
+
+            if(contador !== index){
+
+                productosFiltrados.push(producto);
+
+            }
+
+        }else{
+
+            productosFiltrados.push(producto);
+
+        }
+
+    });
+
+    localStorage.setItem(
+
+        "productos",
+
+        JSON.stringify(productosFiltrados)
+
+    );
+
+    mostrarCategorias();
+
+}
+
+// ======================================
+// VACIAR CARRITO
+// ======================================
+
+function vaciarCarrito(){
+
+    localStorage.removeItem(
+    "carrito"
+    );
+
+    mostrarCarrito();
+
+}
+
+// ======================================
+// INICIAR
+// ======================================
+
+cargarCategorias();
+
+mostrarCategorias();
+
+mostrarCarrito();
+
+</script>
+
+</body>
+
+</html>

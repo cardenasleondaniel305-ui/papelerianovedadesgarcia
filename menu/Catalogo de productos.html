@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Catálogo de Productos</title>
+
+<style>
+
+/* ===================== */
+/* ESTILOS GENERALES */
+/* ===================== */
+
+body{
+
+    font-family: Arial, sans-serif;
+    background:#e6ff44;
+    margin:0;
+    padding:0;
+
+}
+
+h1{
+
+    text-align:center;
+    margin-top:20px;
+    color:#333;
+
+}
+
+/* ===================== */
+/* HEADER */
+/* ===================== */
+
+header{
+
+    background:#9a24e2;
+    padding:15px;
+    text-align:center;
+
+}
+
+header a{
+
+    color:rgb(251, 255, 0);
+    text-decoration:none;
+    font-weight:bold;
+    margin:0 10px;
+
+}
+
+header a:hover{
+
+    color:#5fff9f;
+
+}
+
+/* ===================== */
+/* BOTONES */
+/* ===================== */
+
+button{
+
+    background:#007bff;
+    color:white;
+    border:none;
+    padding:10px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+
+}
+
+button:hover{
+
+    background:#0056b3;
+
+}
+
+/* ===================== */
+/* PRODUCTOS */
+/* ===================== */
+
+.productos{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(250px,1fr));
+
+    gap:20px;
+
+    padding:20px;
+
+}
+
+.producto{
+
+    background:white;
+    border-radius:15px;
+    padding:15px;
+    text-align:center;
+
+    box-shadow:
+    0 4px 10px rgba(0,0,0,0.1);
+
+}
+
+.producto img{
+
+    width:180px;
+    height:180px;
+    object-fit:contain;
+    margin-bottom:10px;
+
+}
+
+.producto h3{
+
+    margin:10px 0;
+    color:#333;
+
+}
+
+.producto p{
+
+    margin:5px 0;
+    color:#555;
+
+}
+
+/* ===================== */
+/* VOLVER */
+/* ===================== */
+
+.volver{
+
+    text-align:center;
+    margin:30px;
+
+}
+
+.volver a{
+
+    text-decoration:none;
+    background:#27ae60;
+    color:white;
+    padding:10px 20px;
+    border-radius:8px;
+
+}
+
+.volver a:hover{
+
+    background:#219150;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- ===================== -->
+<!-- HEADER -->
+<!-- ===================== -->
+
+<header>
+
+<!-- SOLO ADMIN VE ESTO -->
+
+<a
+href="Actualizar productos.html"
+id="panelAdmin"
+style="display:none;">
+
+Panel de Administrador
+
+</a>
+
+<a href="index.html">
+
+Inicio
+
+</a>
+
+</header>
+
+<!-- ===================== -->
+<!-- TITULO -->
+<!-- ===================== -->
+
+<h1>
+
+Catálogo de Productos
+
+</h1>
+
+<!-- ===================== -->
+<!-- PRODUCTOS -->
+<!-- ===================== -->
+
+<div
+class="productos"
+id="listaProductos">
+
+</div>
+
+<!-- ===================== -->
+<!-- BOTÓN VOLVER -->
+<!-- ===================== -->
+
+<div class="volver">
+
+<a href="index.html">
+
+Volver
+
+</a>
+
+</div>
+
+<!-- ===================== -->
+<!-- SCRIPT -->
+<!-- ===================== -->
+
+<script>
+
+// ======================================
+// VALIDAR SI ES ADMIN
+// ======================================
+
+let login =
+localStorage.getItem("login");
+
+let rol =
+localStorage.getItem("rol");
+
+// MOSTRAR PANEL SOLO SI ES ADMIN
+
+if(
+login === "true"
+&&
+rol === "admin"
+){
+
+document.getElementById(
+"panelAdmin"
+).style.display = "inline";
+
+}
+
+// ======================================
+// OBTENER PRODUCTOS
+// ======================================
+
+let productos =
+
+JSON.parse(
+localStorage.getItem("productos")
+)
+
+|| [];
+
+// ======================================
+// MOSTRAR PRODUCTOS
+// ======================================
+
+function mostrarProductos(){
+
+    let contenedor =
+
+    document.getElementById(
+    "listaProductos"
+    );
+
+    contenedor.innerHTML = "";
+
+    // SI NO HAY PRODUCTOS
+
+    if(productos.length === 0){
+
+        contenedor.innerHTML = `
+
+        <h2>
+        No hay productos registrados
+        </h2>
+
+        `;
+
+        return;
+
+    }
+
+    // RECORRER PRODUCTOS
+
+    productos.forEach((producto,index)=>{
+
+        contenedor.innerHTML += `
+
+        <div class="producto">
+
+            <img
+            src="${producto.imagen}"
+            alt="${producto.nombre}">
+
+            <h3>
+
+            ${producto.nombre}
+
+            </h3>
+
+            <p>
+
+            <strong>Categoría:</strong>
+
+            ${producto.categoria}
+
+            </p>
+
+            <p>
+
+            <strong>Color:</strong>
+
+            ${producto.color}
+
+            </p>
+
+            <p>
+
+            <strong>Precio Unidad:</strong>
+
+            $${producto.precioUnidad} MXN
+
+            </p>
+
+            <p>
+
+            <strong>Precio Paquete:</strong>
+
+            $${producto.precioPaquete} MXN
+
+            </p>
+
+            ${
+            login === "true"
+            &&
+            rol === "admin"
+            ?
+
+            `
+
+            <button
+            onclick="eliminarProducto(${index})">
+
+            Eliminar
+
+            </button>
+
+            `
+
+            :
+
+            ""
+
+            }
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+// ======================================
+// ELIMINAR PRODUCTO
+// ======================================
+
+function eliminarProducto(index){
+
+// SOLO ADMIN PUEDE ELIMINAR
+
+if(
+login !== "true"
+||
+rol !== "admin"
+){
+
+alert(
+"No tienes permisos"
+);
+
+return;
+
+}
+
+let confirmar = confirm(
+"¿Eliminar producto?"
+);
+
+if(confirmar){
+
+productos.splice(index,1);
+
+localStorage.setItem(
+
+"productos",
+
+JSON.stringify(productos)
+
+);
+
+mostrarProductos();
+
+}
+
+}
+
+// ======================================
+// INICIAR
+// ======================================
+
+mostrarProductos();
+
+</script>
+
+</body>
+
+</html>

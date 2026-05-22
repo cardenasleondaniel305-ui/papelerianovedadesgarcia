@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios de Papelería</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="menu-navegacion">
+        <a href="../../index.html">Inicio</a>
+       <!-- <a href="../../menu.html">Menú principal</a> -->
+        <a href="javascript:history.back()">Volver</a>
+    </nav>
+    <div class="logo">
+        <img src="../../images/papeleria_novedades_garcia_logo_transparente.png" alt="Logo">
+    </div>
+    <div class="servicio-papeleria">
+        <h1>Servicios de Papelería</h1>
+        <p>
+            Ofrecemos una amplia variedad de productos y servicios de papelería para satisfacer las necesidades de estudiantes, profesionales y empresas.
+        </p>
+        <ul>
+            <li>Venta de útiles escolares y de oficina</li>
+            <li>Impresiones y copias</li>
+            <li>Engargolados</li>
+            <li>Escaneo de documentos</li>
+            <li>Actualización de documentos</li>
+            <li>Envoltura de regalos</li>
+            <li>Material didáctico y creativo</li>
+            <li>Atención personalizada</li>
+        </ul>
+        <p>
+            Visítanos y descubre todo lo que tenemos para ti.
+        </p>
+    </div>
+    <div class="articulos-oficina-galeria">
+    <div class="articulo animado">
+        <img src="../papeleria/escaneo de documentos 2.jpg" alt="Papeleria 1">
+        <p>Escaneo de documentos</p>
+        <p>De $5 por hoja</p>
+    </div>
+    <div class="articulo animado">
+        <img src="../papeleria/sacar impresiones.jpg" alt="Papeleria 2">
+        <p>Impresiones</p>
+        <p>Blanco y negro $2</p>
+        <p>Color $7 o dependiendo la cantidad de color</p>
+        <p>Copias</p>
+        <p>Blanco y negro de un solo lado $1.50</p>
+        <p>Blanco y negro por ambos lados $3</p>
+        <p>Copias a color $5</p>
+        <p>Copias INE al 200% $5</p>
+    </div>
+    <div class="articulo animado">
+        <img src="../papeleria/enmicado.jpg" alt="Papeleria 3">
+        <p>Enmicados</p>
+        <p>De $10 a $50 dependiendo del tamaño</p>
+    </div>
+        <div class="articulo animado">
+        <img src="../papeleria/egargolado.jpg" alt="Papeleria 4">
+        <p>Engargolados</p>
+        <p>De $20 a $100 dependiendo el ancho(Numero de hojas)</p>
+        </div>
+            <div class="articulo animado">
+        <img src="../papeleria/material didactico.jpg" alt="Papeleria 5">
+        <p>Material didáctico</p>
+        <p>De $10 a $50 dependiendo del tipo</p>
+        </div>
+        <div class="articulo animado">
+        <img src="../papeleria/venta de articulos escolares.jpg" alt="Papeleria 6">
+        <p>Venta de articulos escolares</p>
+    </div>
+    <div class="articulo animado">
+        <img src="../papeleria/actualizacion de documentos.webp" alt="Papeleria 7">
+        <p>Actualización de documentos</p>
+        <p>Varia precio</p>
+    </div>
+    <div class="articulo animado">
+        <img src="../papeleria/articulos de oficina.jpg" alt="Papeleria 8">
+        <p>Articulos de oficina</p>
+    </div>
+    <!-- Agrega más artículos según necesites -->
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const articulos = document.querySelectorAll('.articulo');
+
+    function mostrarArticulosAnimados() {
+        articulos.forEach(articulo => {
+            const rect = articulo.getBoundingClientRect();
+            if (rect.top < window.innerHeight - 50) {
+                articulo.classList.add('visible');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', mostrarArticulosAnimados);
+    mostrarArticulosAnimados(); // Para mostrar los que ya están en pantalla
+});
+</script>
+</body>
+
+<footer>
+    <p>&copy; 2026 Papelería y novedades García. Todos los derechos reservados.</p>
+    <p>
+        Encuentranos en Jardines de las Naciones 122, Los Héroes Tecámac, 55764 Ciudad de México, México. o visítanos en Google Maps para conocer nuestra ubicación exacta.
+        </p>
+        <p> Correo electrónico: garcianovedades1@gmail.com</p>
+        <!-- Redes sociales -->
+    <div class="redes-sociales">
+        <a href="https://wa.me/5215512345678" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" 
+width="60" alt="WhatsApp">
+</a>
+
+        <a href="https://www.facebook.com/profile.php?id=61586238901068" target="_blank"><img src="../../images/Facebook_Logo_(2019).png.webp" alt="Facebook"></a>
+        <a href="https://www.instagram.com/pape2_026?utm_source=qr&igsh=MTZ3ZW1sYWhiN2FocQ==" target="_blank"><img src="../../images/Instagram_icon.png" alt="Instagram"></a>
+        <a href="https://www.google.com/maps/place/Novedades+Garcia/@19.6340948,-99.0305121,3a,75y,31.74h,91.17t/data=!3m7!1e1!3m5!1saFiQ-F3NDr3ONLRi6N0Fhg!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D-1.168040298569835%26panoid%3DaFiQ-F3NDr3ONLRi6N0Fhg%26yaw%3D31.74212734783976!7i16384!8i8192!4m14!1m7!3m6!1s0x85d1f21915243d69:0xb350633b5b7d233c!2sC.+Jardines+de+las+Naciones+122,+Los+Heroes+Tecamac,+55764+Ciudad+de+M%C3%A9xico,+M%C3%A9x.!3b1!8m2!3d19.6340719!4d-99.0304878!3m5!1s0x85d1f2194418532d:0x316376b62301c9f7!8m2!3d19.6340887!4d-99.0304328!16s%2Fg%2F11rmzyrp4h?entry=ttu&g_ep=EgoyMDI2MDIyNS4wIKXMDSoASAFQAw%3D%3D" ><img src="../../images/google maps.jpg" alt="Google maps"></a>
+    </div>
+
+</footer>
+</html>

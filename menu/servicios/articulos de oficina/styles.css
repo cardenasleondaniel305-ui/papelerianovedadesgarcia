@@ -1,0 +1,123 @@
+body {
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(#ffff05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.logo img {
+    height: 100px; /* Logo pequeño */
+    width: auto;
+    padding: 0;
+}
+
+.articulos-oficina {
+    background: rgba(255,255,255,0.85);
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    max-width: 600px;
+    text-align: center;
+}
+
+.articulos-oficina h1 {
+    margin-bottom: 20px;
+    color: #8604ff;
+}
+
+.articulos-oficina p, .articulos-oficina ul {
+    color: #333;
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+.articulos-oficina ul {
+    list-style: disc inside;
+    margin: 20px 0;
+    padding: 0;
+}
+.menu-navegacion {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
+    background: rgb(134, 4, 255);
+    padding: 15px 30px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.menu-navegacion a {
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1em;
+    transition: color 0.2s;
+}
+
+.menu-navegacion a:hover {
+    color: #5a027f;
+    text-decoration: underline;
+}
+.articulos-oficina-galeria {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px 0;
+    background: linear-gradient(#8400ffce);
+    border-radius: 20px;
+    margin: 40px 0;
+}
+
+.articulo {
+    background: rgba(255,255,255,0.85);
+    border-radius: 15px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    padding: 20px;
+    text-align: center;
+    width: 220px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(.4,2,.6,1);
+}
+
+.articulo img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.articulo.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.redes-sociales img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    vertical-align: middle;
+}
+
+footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(#ffffff);
+    padding: 10px 20px;
+}

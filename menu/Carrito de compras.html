@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Papelería - Carrito de Compras</title>
+
+<style>
+
+body{
+    font-family:Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:20px;
+}
+
+h1{
+    text-align:center;
+    margin-top:40px;
+    color:#333;
+}
+
+.categoria{
+    margin-top:50px;
+}
+
+.contenedor{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(320px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:white;
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.card h2{
+    text-align:center;
+}
+
+select, button{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    font-size:15px;
+}
+
+button{
+    background:#007bff;
+    color:white;
+    border:none;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+.imagen{
+    text-align:center;
+    margin-top:15px;
+}
+
+.imagen img{
+    width:200px;
+    height:200px;
+    object-fit:contain;
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:10px;
+    background:#fafafa;
+}
+
+.carrito{
+    margin-top:40px;
+    background:white;
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.item-carrito{
+    border-bottom:1px solid #ddd;
+    padding:10px 0;
+}
+
+.total{
+    margin-top:20px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Papelería - Carrito de Compras</h1>
+
+<!-- CONTENEDOR DINÁMICO -->
+
+<div id="tienda"></div>
+
+<!-- CARRITO -->
+
+<div class="carrito">
+
+<h2>Carrito de Compras</h2>
+
+<div id="lista-carrito"></div>
+
+<div class="total">
+
+Total:
+$<span id="total">0</span> MXN
+
+</div>
+
+</div>
+
+<script>
+
+// ======================================
+// OBTENER DATOS
+// ======================================
+
+let productos =
+JSON.parse(localStorage.getItem("productos"))
+|| [];
+
+let categorias =
+JSON.parse(localStorage.getItem("categorias"))
+|| [];
+
+let tienda =
+document.getElementById("tienda");
+
+// ======================================
+// AGRUPAR PRODUCTOS POR NOMBRE
+// ======================================
+
+let agrupados = {};
+
+productos.forEach(producto => {
+
+    // clave única por nombre
+
+    if(!agrupados[producto.nombre]){
+
+        agrupados[producto.nombre] = {
+
+            nombre: producto.nombre,
+            categoria: producto.categoria,
+            imagen: producto.imagen,
+            variantes: []
+
+        };
+
+    }
+
+    agrupados[producto.nombre]
+    .variantes.push(producto);
+
+});
+
+// ======================================
+// CREAR CATEGORÍAS
+// ======================================
+
+categorias.forEach(categoria => {
+
+    tienda.innerHTML += `
+
+    <div class="categoria">
+
+        <h1>${categoria}</h1>
+
+        <div
+        class="contenedor"
+        id="${categoria}">
+        </div>
+
+    </div>
+
+    `;
+
+});
+
+// ======================================
+// MOSTRAR PRODUCTOS
+// ======================================
+
+Object.values(agrupados)
+.forEach(producto => {
+
+    // Opciones dinámicas
+
+    let colores = [];
+    let tipos = [];
+
+    producto.variantes.forEach(v => {
+
+        if(!colores.includes(v.color)){
+
+            colores.push(v.color);
+
+        }
+
+        if(v.tipo && !tipos.includes(v.tipo)){
+
+            tipos.push(v.tipo);
+
+        }
+
+    });
+
+    let tarjeta = `
+
+    <div class="card">
+
+        <h2>${producto.nombre}</h2>
+
+        <select
+        id="tipo-${producto.nombre}">
+
+        <option value="">
+        Tipo
+        </option>
+
+        ${tipos.map(tipo => `
+
+        <option value="${tipo}">
+        ${tipo}
+        </option>
+
+        `).join("")}
+
+        </select>
+
+        <select
+        id="color-${producto.nombre}">
+
+        <option value="">
+        Color
+        </option>
+
+        ${colores.map(color => `
+
+        <option value="${color}">
+        ${color}
+        </option>
+
+        `).join("")}
+
+        </select>
+
+        <select
+        id="presentacion-${producto.nombre}"
+        onchange="
+        actualizarPrecio(
+        '${producto.nombre}'
+        )">
+
+            <option value="">
+            Presentación
+            </option>
+
+            <option value="unidad">
+            Unidad
+            </option>
+
+            <option value="paquete">
+            Paquete
+            </option>
+
+        </select>
+
+        <div class="imagen">
+
+            <img
+            src="${producto.imagen}"
+            id="img-${producto.nombre}">
+
+        </div>
+
+        <p id="precio-${producto.nombre}">
+        Precio: $0 MXN
+        </p>
+
+        <button
+        onclick="
+        agregarCarrito(
+        '${producto.nombre}'
+        )">
+
+        Agregar al carrito
+
+        </button>
+
+    </div>
+
+    `;
+
+    let contenedor =
+    document.getElementById(producto.categoria);
+
+    if(contenedor){
+
+        contenedor.innerHTML += tarjeta;
+
+    }
+
+});
+
+// ======================================
+// ACTUALIZAR PRECIO
+// ======================================
+
+function actualizarPrecio(nombre){
+
+    let presentacion =
+    document.getElementById(
+    `presentacion-${nombre}`
+    ).value;
+
+    let producto =
+    productos.find(p => p.nombre === nombre);
+
+    let precio = 0;
+
+    if(presentacion === "unidad"){
+
+        precio = producto.precioUnidad;
+
+    }
+
+    if(presentacion === "paquete"){
+
+        precio = producto.precioPaquete;
+
+    }
+
+    document.getElementById(
+    `precio-${nombre}`
+    ).innerHTML =
+
+    `Precio: $${precio} MXN`;
+
+}
+
+// ======================================
+// CARRITO
+// ======================================
+
+let total = 0;
+
+function agregarCarrito(nombre){
+
+    let tipo =
+    document.getElementById(
+    `tipo-${nombre}`
+    ).value;
+
+    let color =
+    document.getElementById(
+    `color-${nombre}`
+    ).value;
+
+    let presentacion =
+    document.getElementById(
+    `presentacion-${nombre}`
+    ).value;
+
+    if(
+        color === "" ||
+        presentacion === ""
+    ){
+
+        alert(
+        "Selecciona color y presentación"
+        );
+
+        return;
+
+    }
+
+    // Buscar producto exacto
+
+    let producto =
+    productos.find(p =>
+
+        p.nombre === nombre &&
+        p.color === color
+
+    );
+
+    let precio = 0;
+
+    if(presentacion === "unidad"){
+
+        precio =
+        Number(producto.precioUnidad);
+
+    }
+
+    if(presentacion === "paquete"){
+
+        precio =
+        Number(producto.precioPaquete);
+
+    }
+
+    let lista =
+    document.getElementById(
+    "lista-carrito"
+    );
+
+    let item =
+    document.createElement("div");
+
+    item.classList.add(
+    "item-carrito"
+    );
+
+    item.innerHTML = `
+
+    <strong>${nombre}</strong>
+    <br>
+
+    Tipo:
+    ${tipo || "No especificado"}
+
+    <br>
+
+    Color:
+    ${color}
+
+    <br>
+
+    Presentación:
+    ${presentacion}
+
+    <br>
+
+    Precio:
+    $${precio} MXN
+
+    `;
+
+    lista.appendChild(item);
+
+    total += precio;
+
+    document.getElementById("total")
+    .textContent = total;
+
+}
+
+</script>
+
+</body>
+</html>

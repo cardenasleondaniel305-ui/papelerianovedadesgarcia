@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Papelería y Novedades García</title>
+
+<link rel="stylesheet" href="./css/styles.css">
+
+<style>
+
+/* ===================================== */
+/* PRODUCTOS DINÁMICOS */
+/* ===================================== */
+
+#productosDinamicos{
+
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:30px;
+padding:40px 0;
+
+}
+
+/* ===================================== */
+/* ANIMACIÓN */
+/* ===================================== */
+
+.animado{
+
+opacity:0;
+transform:translateY(40px);
+transition:
+opacity 0.8s ease,
+transform 0.8s ease;
+
+}
+
+.visible{
+
+opacity:1;
+transform:translateY(0);
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- ===================================== -->
+<!-- MENÚ PRINCIPAL -->
+<!-- ===================================== -->
+
+<nav class="menu-principal">
+
+<!-- BOTÓN ACCEDER -->
+
+<div class="acceder" id="contenedorLogin">
+
+<a href="login.html">
+
+<button id="btnAcceder">
+
+Acceder
+
+</button>
+
+</a>
+
+</div>
+
+<ul class="menu">
+
+<!-- SERVICIOS -->
+
+<li>
+
+<a href="#">Servicios</a>
+
+<ul class="submenu">
+
+<li>
+<a href="servicios/papeleria/papelería.html">
+Papelería
+</a>
+</li>
+
+<li>
+<a href="servicios/articulos de oficina/articulos de oficina.html">
+Artículos de Oficina
+</a>
+</li>
+
+<li>
+<a href="servicios/material escolar/material escolar.html">
+Material Escolar
+</a>
+</li>
+
+</ul>
+
+</li>
+
+<!-- PRODUCTOS -->
+
+<li>
+
+<a href="#">Productos</a>
+
+<ul class="submenu" id="submenuProductos">
+
+<!-- CATEGORÍAS DINÁMICAS -->
+
+</ul>
+
+</li>
+
+<!-- NOSOTROS -->
+
+<li>
+
+<a href="quienes somos/quienes somos.html">
+
+Nosotros
+
+</a>
+
+</li>
+
+<!-- HORARIOS -->
+
+<li>
+
+<a href="Horarios y productos.html">
+
+Horarios y Productos
+
+</a>
+
+</li>
+
+<!-- ADMIN -->
+
+<li
+id="menuAdmin"
+style="display:none;">
+
+<a href="Actualizar productos.html">
+
+Administrador
+
+</a>
+
+</li>
+
+<!-- CATÁLOGO -->
+
+<li>
+
+<a href="Catalogo de productos.html">
+
+Catálogo de Productos
+
+</a>
+
+</li>
+
+<!-- PEDIDOS -->
+
+<li>
+
+<a href="Realizar pedido.html">
+
+Realizar Pedido
+
+</a>
+
+</li>
+
+<!-- DESTACADOS -->
+
+<li>
+
+<a href="Productos destacados/Productos destacados.html">
+
+Productos destacados
+
+</a>
+
+</li>
+
+<!-- CERRAR SESIÓN -->
+
+<li
+id="cerrarSesionLi"
+style="display:none;">
+
+<a href="#"
+onclick="cerrarSesion()">
+
+Cerrar sesión
+
+</a>
+
+</li>
+
+</ul>
+
+</nav>
+
+<!-- ===================================== -->
+<!-- HEADER -->
+<!-- ===================================== -->
+
+<header>
+
+<div class="logo">
+
+<img
+src="./images/papeleria_novedades_garcia_logo_transparente.png"
+alt="Logo">
+
+</div>
+
+<div class="redes-sociales">
+
+<a href="https://wa.me/5215660166303"
+target="_blank">
+
+<img
+src="https://cdn-icons-png.flaticon.com/512/733/733585.png"
+width="60"
+alt="WhatsApp">
+
+</a>
+
+<a
+href="https://www.facebook.com/profile.php?id=61586238901068"
+target="_blank">
+
+<img
+src="./images/Facebook_Logo_(2019).png.webp"
+alt="Facebook">
+
+</a>
+
+<a
+href="https://www.instagram.com/pape2_026?utm_source=qr&igsh=MTZ3ZW1sYWhiN2FocQ=="
+target="_blank">
+
+<img
+src="./images/Instagram_icon.png"
+alt="Instagram">
+
+</a>
+
+<a href="https://www.google.com/maps">
+
+<img
+src="./images/google maps.jpg"
+alt="Google maps">
+
+</a>
+
+</div>
+
+</header>
+
+<!-- ===================================== -->
+<!-- BIENVENIDA -->
+<!-- ===================================== -->
+
+<div class="quienes-somos">
+
+<h1>
+
+Bienvenido a nuestra Papelería
+
+</h1>
+
+<p>
+
+Encuentra todo lo que necesites
+para la escuela,
+la oficina y tus manualidades.
+
+</p>
+
+<p>
+
+Contamos con productos escolares,
+artículos de oficina
+y mucho más.
+
+</p>
+
+</div>
+
+<!-- ===================================== -->
+<!-- RECUADROS BLANCOS -->
+<!-- ===================================== -->
+
+<div class="articulos-oficina-galeria">
+
+<div class="articulo animado">
+
+<img
+src="./servicios/articulos de oficina/images/oficina3.jpeg">
+
+<p>
+
+Papeles y blocs de notas
+
+</p>
+
+<p>Papel lustre $2</p>
+
+<p>Papel bond $8</p>
+
+<p>Papel china $6</p>
+
+</div>
+
+<div class="articulo animado">
+
+<img
+src="./servicios/material escolar/images/fomi moldaeble.webp">
+
+<p>
+
+Fomi moldeable
+
+</p>
+
+<p>
+
+Desde $10 hasta $30
+
+</p>
+
+</div>
+
+<div class="articulo animado">
+
+<img
+src="./servicios/articulos de oficina/images/oficina1.jpeg">
+
+<p>
+
+Accesorios de escritorio
+
+</p>
+
+<p>
+
+Portalápices $30
+
+</p>
+
+</div>
+
+<div class="articulo animado">
+
+<img
+src="./servicios/material escolar/images/acuarelas.webp">
+
+<p>
+
+Acuarelas
+
+</p>
+
+<p>$25</p>
+
+</div>
+
+<div class="articulo animado">
+
+<img
+src="./servicios/material escolar/images/libretas.webp">
+
+<p>
+
+Cuadernos y libretas
+
+</p>
+
+<p>Scribe $30</p>
+
+<p>Norma $40</p>
+
+</div>
+
+<div class="articulo animado">
+
+<img
+src="./servicios/material escolar/images/lapices.jpg">
+
+<p>
+
+Lápices y colores
+
+</p>
+
+<p>Lápices $5</p>
+
+<p>Crayola $50</p>
+
+</div>
+
+</div>
+
+<!-- ===================================== -->
+<!-- PRODUCTOS AGREGADOS -->
+<!-- ===================================== -->
+
+<h2
+style="
+text-align:center;
+margin-top:40px;">
+
+Productos agregados
+
+</h2>
+
+<div
+id="productosDinamicos">
+
+</div>
+
+<!-- ===================================== -->
+<!-- FOOTER -->
+<!-- ===================================== -->
+
+<footer>
+
+<p>
+
+© 2026 Papelería y novedades García
+
+</p>
+
+<p>
+
+Correo:
+garcianovedades1@gmail.com
+
+</p>
+
+<p>
+
+WhatsApp:
+5660166303
+
+</p>
+
+</footer>
+
+<!-- ===================================== -->
+<!-- SCRIPT -->
+<!-- ===================================== -->
+
+<script>
+
+// =====================================
+// LOGIN ADMIN
+// =====================================
+
+let login =
+localStorage.getItem("login");
+
+let rol =
+localStorage.getItem("rol");
+
+// SI ES ADMIN
+
+if(
+login === "true"
+&&
+rol === "admin"
+){
+
+document.getElementById(
+"menuAdmin"
+).style.display = "block";
+
+document.getElementById(
+"cerrarSesionLi"
+).style.display = "block";
+
+document.getElementById(
+"contenedorLogin"
+).style.display = "none";
+
+}
+
+// =====================================
+// CERRAR SESIÓN
+// =====================================
+
+function cerrarSesion(){
+
+localStorage.removeItem("login");
+
+localStorage.removeItem("rol");
+
+window.location.href =
+"index.html";
+
+}
+
+// =====================================
+// CARGAR CATEGORÍAS
+// =====================================
+
+function cargarCategorias(){
+
+let categorias =
+
+JSON.parse(
+localStorage.getItem("categorias")
+)
+
+|| [];
+
+let submenu =
+
+document.getElementById(
+"submenuProductos"
+);
+
+submenu.innerHTML = "";
+
+// SI NO HAY CATEGORÍAS
+
+if(categorias.length === 0){
+
+submenu.innerHTML = `
+
+<li>
+
+<a href="#">
+
+Sin categorías
+
+</a>
+
+</li>
+
+`;
+
+return;
+
+}
+
+// CREAR MENÚ
+
+categorias.forEach(categoria=>{
+
+submenu.innerHTML += `
+
+<li>
+
+<a href="#"
+onclick="filtrarCategoria('${categoria}')">
+
+${categoria}
+
+</a>
+
+</li>
+
+`;
+
+});
+
+}
+
+// =====================================
+// MOSTRAR PRODUCTOS
+// =====================================
+
+function mostrarProductos(categoria=""){
+
+let productos =
+
+JSON.parse(
+localStorage.getItem("productos")
+)
+
+|| [];
+
+let contenedor =
+
+document.getElementById(
+"productosDinamicos"
+);
+
+contenedor.innerHTML = "";
+
+// FILTRAR
+
+if(categoria !== ""){
+
+productos = productos.filter(
+
+producto =>
+
+producto.categoria === categoria
+
+);
+
+}
+
+// SI NO HAY PRODUCTOS
+
+if(productos.length === 0){
+
+contenedor.innerHTML = `
+
+<div class="articulo visible">
+
+<p>
+
+No hay productos
+
+</p>
+
+</div>
+
+`;
+
+return;
+
+}
+
+// MOSTRAR PRODUCTOS
+
+productos.forEach(producto=>{
+
+contenedor.innerHTML += `
+
+<div class="articulo animado">
+
+<img
+src="${producto.imagen}"
+alt="${producto.nombre}">
+
+<p>
+
+<strong>
+
+${producto.nombre}
+
+</strong>
+
+</p>
+
+<p>
+
+Categoría:
+${producto.categoria}
+
+</p>
+
+<p>
+
+Color:
+${producto.color}
+
+</p>
+
+<p>
+
+Precio unidad:
+$${producto.precioUnidad}
+
+</p>
+
+<p>
+
+Precio paquete:
+$${producto.precioPaquete}
+
+</p>
+
+</div>
+
+`;
+
+});
+
+// ACTIVAR ANIMACIÓN
+
+activarAnimaciones();
+
+}
+
+// =====================================
+// FILTRAR CATEGORÍA
+// =====================================
+
+function filtrarCategoria(categoria){
+
+mostrarProductos(categoria);
+
+}
+
+// =====================================
+// ANIMACIONES
+// =====================================
+
+function activarAnimaciones(){
+
+const articulos =
+
+document.querySelectorAll('.animado');
+
+function mostrarArticulos(){
+
+articulos.forEach(articulo=>{
+
+const rect =
+
+articulo.getBoundingClientRect();
+
+if(
+rect.top <
+window.innerHeight - 50
+){
+
+articulo.classList.add(
+'visible'
+);
+
+}
+
+});
+
+}
+
+window.addEventListener(
+'scroll',
+mostrarArticulos
+);
+
+mostrarArticulos();
+
+}
+
+// =====================================
+// INICIAR
+// =====================================
+
+cargarCategorias();
+
+mostrarProductos();
+
+activarAnimaciones();
+
+</script>
+
+</body>
+</html>

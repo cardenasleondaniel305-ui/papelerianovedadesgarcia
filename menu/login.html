@@ -1,0 +1,160 @@
+<!-- =============================== -->
+<!-- login.html -->
+<!-- =============================== -->
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Login</title>
+
+<style>
+
+body{
+
+font-family:Arial;
+background:#fbff00;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+
+}
+
+.login{
+
+background:white;
+padding:30px;
+border-radius:15px;
+width:320px;
+
+box-shadow:
+0 4px 10px rgba(0,0,0,0.2);
+
+}
+
+input{
+
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:8px;
+border:1px solid #ccc;
+
+}
+
+button{
+
+width:100%;
+padding:12px;
+margin-top:15px;
+background:#9a24e2;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+
+}
+
+button:hover{
+
+background:#7300c0;
+
+}
+
+h1{
+
+text-align:center;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="login">
+
+<h1>Iniciar Sesión</h1>
+
+<input
+type="text"
+id="usuario"
+placeholder="Usuario">
+
+<input
+type="password"
+id="password"
+placeholder="Contraseña">
+
+<button onclick="iniciarSesion()">
+
+Entrar
+
+</button>
+
+</div>
+
+<script>
+
+// ======================================
+// LOGIN
+// ======================================
+
+function iniciarSesion(){
+
+let usuario =
+document.getElementById("usuario").value;
+
+let password =
+document.getElementById("password").value;
+
+// ================================
+// ADMIN
+// ================================
+
+if(
+usuario === "admin"
+&&
+password === "1234"
+){
+
+localStorage.setItem(
+"login",
+"true"
+);
+
+localStorage.setItem(
+"rol",
+"admin"
+);
+
+// REDIRECCIONAR
+
+window.location.href =
+"index.html";
+
+}
+
+else{
+
+alert(
+"Usuario o contraseña incorrectos"
+);
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
